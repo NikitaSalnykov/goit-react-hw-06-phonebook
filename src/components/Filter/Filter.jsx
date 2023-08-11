@@ -1,19 +1,22 @@
 import { Input } from 'components/ContactForm/ContactForm.styled'
-import PropTypes from 'prop-types'
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { filterContacts } from 'store/filter/filterSlice';
 import { Label } from './Filter.styled';
 
 
-export const Filter = ({ filter, handleFilter }) => {
+export const Filter = () => {
+  const dispatch = useDispatch()
+
+  const handleFilter = ({ currentTarget }) => {
+    dispatch(filterContacts(currentTarget.value));
+  };
+
     return (
       <div>
         <Label style={{ marginRight: '14px' }} htmlFor="filter">Find contacts by name</Label>
-        <Input type="text" value={filter} name="input" id="filter" onChange={handleFilter} />
+        <Input type="text" name="input" id="filter" onChange={handleFilter} />
       </div>
     )
 }
-
-Filter.propTypes = {
-  handleFilter: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired
-};
+ 

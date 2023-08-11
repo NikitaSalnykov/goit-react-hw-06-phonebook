@@ -1,12 +1,36 @@
 import { Button } from 'components/ContactForm/ContactForm.styled'
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteContact } from 'store/contacts/contactsSlice'
+import { getContacts } from 'store/contacts/selectors'
+import { getFilter } from 'store/filter/selectors'
 import { List } from './ContactList.styled'
 
-export const ContactList = ({contacts, onDeleteBtn}) => {
+export const ContactList = () => {
+  
+  const dispatch = useDispatch()
+  const filter = useSelector(getFilter)
+
+  const contacts = useSelector(getContacts)
+  
+    const getFilteredContacts = () => {
+    const normilizedFilterValue = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normilizedFilterValue)
+    );
+  };
+
+  const filteredContacts = getFilteredContacts()
+  
+  console.log(getFilteredContacts());
+
+  const onDeleteBtn = id => {
+    console.log(id);
+    dispatch(deleteContact(id))
+  };
   
   return (
     <List>
-      {contacts.map((contact) => {
+      {filteredContacts.map((contact) => {
         return (
           <li key={contact.id}>
             <div>
@@ -20,9 +44,4 @@ export const ContactList = ({contacts, onDeleteBtn}) => {
       })}
     </List>
   )
-}
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onDeleteBtn: PropTypes.func.isRequired,
 }
