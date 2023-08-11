@@ -5,6 +5,7 @@ import { filterContacts } from 'store/filter/filterSlice';
 import { Label } from './Filter.styled';
 
 
+
 export const Filter = () => {
   const dispatch = useDispatch()
 

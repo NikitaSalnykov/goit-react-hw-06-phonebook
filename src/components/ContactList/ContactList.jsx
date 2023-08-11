@@ -21,10 +21,7 @@ export const ContactList = () => {
 
   const filteredContacts = getFilteredContacts()
   
-  console.log(getFilteredContacts());
-
   const onDeleteBtn = id => {
-    console.log(id);
     dispatch(deleteContact(id))
   };
   
